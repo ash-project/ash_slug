@@ -1,6 +1,6 @@
 defmodule AshSlug do
   @moduledoc """
-  An extension for slugifying attributes of a resource.
+  An extension for slugifying attributes on a resource.
   """
 
   @transformers [
