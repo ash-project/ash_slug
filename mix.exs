@@ -13,6 +13,7 @@ defmodule AshSlug.MixProject do
       deps: deps(),
       docs: docs(),
       package: package(),
+      aliases: aliases(),
       description: "An Ash extension for slugifying attributes of a resource.",
       source_url: "https://github.com/rhblind/ash_cloak",
       homepage_url: "https://github.com/rhblind/ash_cloak"
@@ -24,8 +25,27 @@ defmodule AshSlug.MixProject do
       main: "readme",
       source_ref: "v#{@version}",
       extras: [
-        {"README.md", title: "Home"}
-      ]
+        {"README.md", title: "Home"},
+        "documentation/dsls/DSL:-AshSlug.md"
+      ],
+      groups_for_extras: [
+        Reference: ~r"documentation/dsls"
+      ],
+      before_closing_head_tag: fn type ->
+        if type == :html do
+          """
+          <script>
+            if (location.hostname === "hexdocs.pm") {
+              var script = document.createElement("script");
+              script.src = "https://plausible.io/js/script.js";
+              script.setAttribute("defer", "defer")
+              script.setAttribute("data-domain", "ashhexdocs")
+              document.head.appendChild(script);
+            }
+          </script>
+          """
+        end
+      end
     ]
   end
 
@@ -60,6 +80,22 @@ defmodule AshSlug.MixProject do
       {:credo, ">= 0.0.0", only: [:dev, :test], runtime: false},
       {:dialyxir, ">= 0.0.0", only: [:dev, :test], runtime: false},
       {:sobelow, ">= 0.0.0", only: [:dev, :test], runtime: false}
+    ]
+  end
+
+  defp aliases do
+    [
+      sobelow: "sobelow --skip",
+      credo: "credo --strict",
+      docs: [
+        "spark.cheat_sheets",
+        "docs",
+        "spark.replace_doc_links",
+        "spark.cheat_sheets_in_search"
+      ],
+      "spark.formatter": "spark.formatter --extensions AshSlug",
+      "spark.cheat_sheets_in_search": "spark.cheat_sheets_in_search --extensions AshSlug",
+      "spark.cheat_sheets": "spark.cheat_sheets --extensions AshSlug"
     ]
   end
 end
