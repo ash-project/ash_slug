@@ -32,8 +32,8 @@ defmodule MyDomain.Resource do
   end
 
   slug do
-    attributes [:text]              # Pass in a list of attribute names to slugify
-    options(lowercase: false)       # Pass in any keyword options supported by the `Slugify` library
+    attributes [:text]        # Pass in a list of attribute names to slugify
+    options lowercase: false  # Pass in any keyword options supported by the `Slugify` library
   end
 end
 ```

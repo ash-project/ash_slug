@@ -21,7 +21,7 @@ defmodule AshSlugTest.Resource1 do
 
   slug do
     attributes [:text]
-    options(lowercase: false)
+    options lowercase: false
   end
 end
 
