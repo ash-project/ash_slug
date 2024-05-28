@@ -1,4 +1,4 @@
-spark_locals_without_parens = [attributes: 1, options: 1, change: 1]
+spark_locals_without_parens = []
 
 [
   line_length: 120,
