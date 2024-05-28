@@ -3,7 +3,6 @@ defmodule AshSlugTest.Domain do
   use Ash.Domain
 
   resources do
-    resource(AshSlugTest.Resource1)
-    resource(AshSlugTest.Resource2)
+    resource(AshSlugTest.Resource)
   end
 end

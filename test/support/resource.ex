@@ -1,4 +1,4 @@
-defmodule AshSlugTest.Resource1 do
+defmodule AshSlugTest.Resource do
   @moduledoc false
 
   use Ash.Resource,
@@ -12,41 +12,19 @@ defmodule AshSlugTest.Resource1 do
 
   attributes do
     uuid_primary_key(:id)
-    attribute(:text, :string, public?: true)
-  end
-
-  actions do
-    defaults([:read, :destroy, create: :text, update: :text])
-  end
-
-  slug do
-    attributes [:text]
-    options lowercase: false
-  end
-end
-
-defmodule AshSlugTest.Resource2 do
-  @moduledoc false
-
-  use Ash.Resource,
-    domain: AshSlugTest.Domain,
-    data_layer: Ash.DataLayer.Ets,
-    extensions: [AshSlug]
-
-  ets do
-    private?(true)
-  end
-
-  attributes do
-    uuid_primary_key(:id)
+    attribute(:text1, :string, public?: true)
+    attribute(:text2, :string, public?: true)
+    attribute(:text2_slug, :string)
     attribute(:bool, :boolean, public?: true)
   end
 
   actions do
-    defaults([:read, :destroy, create: :bool, update: :bool])
-  end
+    create :create do
+      accept([:text1, :text2, :bool])
 
-  slug do
-    attributes [:bool]
+      change slugify(:text1, lowercase?: false)
+      change slugify(:text2, into: :text2_slug)
+      change slugify(:bool)
+    end
   end
 end

@@ -25,15 +25,14 @@ defmodule MyDomain.Resource do
   attributes do
     uuid_primary_key(:id)
     attribute(:text, :string, public?: true)
+    attribute(:text_slug, :string)
   end
 
   actions do
-    defaults([:read, :destroy, create: :text, update: :text])
-  end
-
-  slug do
-    attributes [:text]        # Pass in a list of attribute names to slugify
-    options lowercase: false  # Pass in any keyword options supported by the `Slugify` library
+    create :create do 
+      accept([:text])
+      change slugify(:text, into: :text_slug)
+    end
   end
 end
 ```
