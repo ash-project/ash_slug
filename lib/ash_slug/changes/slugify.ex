@@ -51,7 +51,7 @@ defmodule AshSlug.Changes.Slugify do
       with {attribute, opts} <- Keyword.pop(opts, :attribute),
            {into, opts} <- Keyword.pop(opts, :into, attribute),
            {:ok, value} when is_binary(value) <- Ash.Changeset.fetch_argument_or_change(changeset, attribute),
-           slug when is_binary(slug) <- Slug.slugify(value, opts) do
+           slug <- Slug.slugify(value, opts) do
         changeset
         |> Ash.Changeset.force_change_attribute(into, slug)
       else

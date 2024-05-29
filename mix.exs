@@ -15,8 +15,8 @@ defmodule AshSlug.MixProject do
       package: package(),
       aliases: aliases(),
       description: "An Ash extension for slugifying attributes of a resource.",
-      source_url: "https://github.com/rhblind/ash_cloak",
-      homepage_url: "https://github.com/rhblind/ash_cloak"
+      source_url: "https://github.com/ash-project/ash_slug",
+      homepage_url: "https://github.com/ash-project/ash_slug"
     ]
   end
 
@@ -63,7 +63,7 @@ defmodule AshSlug.MixProject do
       files: ~w(lib .formatter.exs mix.exs README* LICENSE*
       CHANGELOG* documentation),
       links: %{
-        GitHub: "https://github.com/rhblind/ash_cloak"
+        GitHub: "https://github.com/ash-project/ash_slug"
       }
     ]
   end
@@ -76,10 +76,14 @@ defmodule AshSlug.MixProject do
     [
       {:ash, "~> 3.0"},
       {:slugify, "~> 1.3"},
-      {:ex_doc, "~> 0.33.0", only: :dev, runtime: false},
+      {:ex_doc, github: "elixir-lang/ex_doc", only: [:dev, :test], runtime: false},
+      {:ex_check, "~> 0.12", only: [:dev, :test]},
       {:credo, ">= 0.0.0", only: [:dev, :test], runtime: false},
       {:dialyxir, ">= 0.0.0", only: [:dev, :test], runtime: false},
-      {:sobelow, ">= 0.0.0", only: [:dev, :test], runtime: false}
+      {:sobelow, ">= 0.0.0", only: [:dev, :test], runtime: false},
+      {:git_ops, "~> 2.5", only: [:dev, :test]},
+      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
+      {:mix_audit, ">= 0.0.0", only: [:dev, :test], runtime: false}
     ]
   end
 

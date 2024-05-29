@@ -22,9 +22,9 @@ defmodule AshSlugTest.Resource do
     create :create do
       accept([:text1, :text2, :bool])
 
-      change slugify(:text1, lowercase?: false)
-      change slugify(:text2, into: :text2_slug)
-      change slugify(:bool)
+      change(slugify(:text1, lowercase?: false))
+      change(slugify(:text2, into: :text2_slug))
+      change(slugify(:bool))
     end
   end
 end
