@@ -50,7 +50,7 @@ defmodule AshSlug.Changes.Slugify do
     Ash.Changeset.before_action(changeset, fn changeset ->
       with {attribute, opts} <- Keyword.pop(opts, :attribute),
            {into, opts} <- Keyword.pop(opts, :into, attribute),
-           {:ok, value} when is_binary(value) <- Ash.Changeset.fetch_argument_or_change(changeset, attribute),
+           {:ok, value} when is_binary(value) <- get_attribute(changeset, attribute),
            slug <- Slug.slugify(value, opts) do
         changeset
         |> Ash.Changeset.force_change_attribute(into, slug)
@@ -59,6 +59,13 @@ defmodule AshSlug.Changes.Slugify do
         :error -> changeset
       end
     end)
+  end
+
+  defp get_attribute(changeset, attribute) do
+    case Ash.Changeset.fetch_argument_or_change(changeset, attribute) do
+      {:ok, %Ash.CiString{} = value} -> {:ok, Ash.CiString.value(value)}
+      res -> res
+    end
   end
 
   @spec replace_lowercase_opts(Keyword.t()) :: Keyword.t()
