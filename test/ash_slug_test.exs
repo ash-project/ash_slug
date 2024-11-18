@@ -15,11 +15,11 @@ defmodule AshSlugTest do
   test "ensure Ash.CiString value is slugified" do
     resource =
       AshSlugTest.Resource
-      |> Ash.Changeset.for_create(:create, %{text1: Ash.CiString.new("Hello, World!")})
+      |> Ash.Changeset.for_create(:create, %{text3: Ash.CiString.new("Hello, World!")})
       |> Ash.Changeset.set_context(%{foo: :bar})
       |> Ash.create!()
 
-    assert resource.text1 == "Hello-World"
+    assert resource.text3_slug == "hello-world"
   end
 
   test "ensure value is slugified into another attribute" do
