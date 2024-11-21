@@ -26,7 +26,7 @@ defmodule AshSlug.MixProject do
       source_ref: "v#{@version}",
       extras: [
         {"README.md", title: "Home"},
-        "documentation/dsls/DSL:-AshSlug.md"
+        "documentation/dsls/DSL-AshSlug.md"
       ],
       groups_for_extras: [
         Reference: ~r"documentation/dsls"
