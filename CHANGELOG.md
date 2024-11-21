@@ -5,10 +5,14 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 <!-- changelog -->
 
+## [v0.1.1](https://github.com/ash-project/ash_slug/compare/v0.1.0...v0.1.1) (2024-11-21)
+
+### Improvements:
+
+* Support case insensitive strings using `Ash.CiString`
+* Updated dependencies
+
 ## [v0.1.0](https://github.com/ash-project/ash_slug/compare/v0.1.0...v0.1.0) (2024-05-29)
-
-
-
 
 ### Improvements:
 
