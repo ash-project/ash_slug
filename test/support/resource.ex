@@ -29,5 +29,12 @@ defmodule AshSlugTest.Resource do
       change(slugify(:text3, into: :text3_slug))
       change(slugify(:bool))
     end
+
+    update :update do
+      require_atomic?(false)
+      accept([:text1])
+
+      change(slugify(:text1, lowercase?: false))
+    end
   end
 end
