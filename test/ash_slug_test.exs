@@ -12,6 +12,24 @@ defmodule AshSlugTest do
     assert resource.text1 == "Hello-World"
   end
 
+  test "ensure value is slugified when resource is updated" do
+    resource =
+      AshSlugTest.Resource
+      |> Ash.Changeset.for_create(:create, %{text1: "Hello, World!"})
+      |> Ash.Changeset.set_context(%{foo: :bar})
+      |> Ash.create!()
+
+    assert resource.text1 == "Hello-World"
+
+    resource =
+      resource
+      |> Ash.Changeset.for_update(:update, %{text1: "Hello, World! Again"})
+      |> Ash.Changeset.set_context(%{foo: :bar})
+      |> Ash.update!()
+
+    assert resource.text1 == "Hello-World-Again"
+  end
+
   test "ensure Ash.CiString value is slugified" do
     resource =
       AshSlugTest.Resource
