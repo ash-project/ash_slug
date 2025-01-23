@@ -76,6 +76,7 @@ defmodule AshSlug.MixProject do
     [
       {:ash, "~> 3.0"},
       {:slugify, "~> 1.3"},
+      {:igniter, "~> 0.5", only: [:dev, :test]},
       {:ex_doc, github: "elixir-lang/ex_doc", only: [:dev, :test], runtime: false},
       {:ex_check, "~> 0.12", only: [:dev, :test]},
       {:credo, ">= 0.0.0", only: [:dev, :test], runtime: false},
