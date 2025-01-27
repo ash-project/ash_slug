@@ -11,7 +11,7 @@ defmodule AshSlug.MixProject do
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_paths(Mix.env()),
       deps: deps(),
-      docs: docs(),
+      docs: &docs/0,
       package: package(),
       aliases: aliases(),
       description: "An Ash extension for slugifying attributes of a resource.",
@@ -26,7 +26,7 @@ defmodule AshSlug.MixProject do
       source_ref: "v#{@version}",
       extras: [
         {"README.md", title: "Home"},
-        "documentation/dsls/DSL-AshSlug.md"
+        {"documentation/dsls/DSL-AshSlug.md", search_data: Spark.Docs.search_data_for(AshSlug)}
       ],
       groups_for_extras: [
         Reference: ~r"documentation/dsls"
@@ -95,8 +95,7 @@ defmodule AshSlug.MixProject do
       docs: [
         "spark.cheat_sheets",
         "docs",
-        "spark.replace_doc_links",
-        "spark.cheat_sheets_in_search"
+        "spark.replace_doc_links"
       ],
       "spark.formatter": "spark.formatter --extensions AshSlug",
       "spark.cheat_sheets_in_search": "spark.cheat_sheets_in_search --extensions AshSlug",

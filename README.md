@@ -45,4 +45,4 @@ end
 
 ## Reference
 
-- [AshSlug DSL](documentation/dsls/DSL:-AshSlug.md)
+- [AshSlug DSL](documentation/dsls/DSL-AshSlug.md)
