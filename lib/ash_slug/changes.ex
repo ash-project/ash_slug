@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 Rolf Håvard Blindheim
+#
+# SPDX-License-Identifier: MIT
+
 defmodule AshSlug.Changes do
   @moduledoc """
   Change functions for the `AshSlug` extension.
