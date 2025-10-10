@@ -1,1 +1,5 @@
+# SPDX-FileCopyrightText: 2024 Rolf Håvard Blindheim
+#
+# SPDX-License-Identifier: MIT
+
 ExUnit.start()

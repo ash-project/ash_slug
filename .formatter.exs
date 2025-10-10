@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 Rolf Håvard Blindheim
+#
+# SPDX-License-Identifier: MIT
+
 spark_locals_without_parens = []
 
 [

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2024 Rolf Håvard Blindheim
+#
+# SPDX-License-Identifier: MIT
+
 defmodule AshSlug.Changes.Slugify do
   @moduledoc false
   use Ash.Resource.Change
