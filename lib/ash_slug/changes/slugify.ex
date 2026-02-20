@@ -36,6 +36,11 @@ defmodule AshSlug.Changes.Slugify do
       doc: "A string or list of strings of characters to ignore when slugifying.",
       type: {:wrap_list, :string},
       default: []
+    ],
+    skip_if_present?: [
+      doc: "Skip slug generation when the destination attribute is already being changed.",
+      type: :boolean,
+      default: false
     ]
   ]
 
@@ -51,18 +56,21 @@ defmodule AshSlug.Changes.Slugify do
 
   @impl true
   def change(changeset, opts, _) do
-    Ash.Changeset.before_action(changeset, fn changeset ->
-      with {attribute, opts} <- Keyword.pop(opts, :attribute),
-           {into, opts} <- Keyword.pop(opts, :into, attribute),
-           {:ok, value} when is_binary(value) <- get_attribute(changeset, attribute),
-           slug <- Slug.slugify(value, opts) do
+    with {attribute, opts} <- Keyword.pop(opts, :attribute),
+         {into, opts} <- Keyword.pop(opts, :into, attribute),
+         {skip_if_present?, opts} <- Keyword.pop(opts, :skip_if_present?),
+         {:ok, value} when is_binary(value) <- get_attribute(changeset, attribute),
+         slug <- Slug.slugify(value, opts) do
+      if skip_if_present? && Ash.Changeset.changing_attribute?(changeset, into) do
+        changeset
+      else
         changeset
         |> Ash.Changeset.force_change_attribute(into, slug)
-      else
-        {:ok, _} -> Ash.Changeset.add_error(changeset, field: opts[:attribute], message: "is not a string value")
-        :error -> changeset
       end
-    end)
+    else
+      {:ok, _} -> Ash.Changeset.add_error(changeset, field: opts[:attribute], message: "is not a string value")
+      :error -> changeset
+    end
   end
 
   defp get_attribute(changeset, attribute) do

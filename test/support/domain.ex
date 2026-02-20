@@ -7,6 +7,8 @@ defmodule AshSlugTest.Domain do
   use Ash.Domain
 
   resources do
-    resource(AshSlugTest.Resource)
+    resource(AshSlugTest.Resource) do
+      define(:create_resource, action: :create)
+    end
   end
 end

@@ -21,16 +21,25 @@ defmodule AshSlugTest.Resource do
     attribute(:text2_slug, :string)
     attribute(:text3, :ci_string, public?: true)
     attribute(:text3_slug, :string)
+    attribute(:text4, :string, public?: true)
+
+    attribute(:text4_slug, :string) do
+      allow_nil?(false)
+      public?(true)
+    end
+
     attribute(:bool, :boolean, public?: true)
   end
 
   actions do
     create :create do
-      accept([:text1, :text2, :text3, :bool])
+      primary?(true)
+      accept([:text1, :text2, :text3, :text4, :text4_slug, :bool])
 
       change(slugify(:text1, lowercase?: false))
       change(slugify(:text2, into: :text2_slug))
       change(slugify(:text3, into: :text3_slug))
+      change(slugify(:text4, into: :text4_slug, skip_if_present?: true))
       change(slugify(:bool))
     end
 

@@ -6,20 +6,34 @@ defmodule AshSlugTest do
   use ExUnit.Case
   doctest AshSlug
 
+  @base_params %{text4: "My Slugified Version Can Not Be Null"}
+
   test "ensure value is slugified" do
     resource =
       AshSlugTest.Resource
-      |> Ash.Changeset.for_create(:create, %{text1: "Hello, World!"})
+      |> Ash.Changeset.for_create(:create, build_params(%{text1: "Hello, World!"}))
       |> Ash.Changeset.set_context(%{foo: :bar})
       |> Ash.create!()
 
     assert resource.text1 == "Hello-World"
   end
 
+  test "ensure value is slugified for mandatory field" do
+    resource = AshSlugTest.Domain.create_resource!(%{text4: "My Test Value!"})
+
+    assert resource.text4_slug == "my-test-value"
+  end
+
+  test "skip slugifying for field that is already being changed" do
+    resource = AshSlugTest.Domain.create_resource!(%{text4: "My Test Value!", text4_slug: "test-one"})
+
+    assert resource.text4_slug == "test-one"
+  end
+
   test "ensure value is slugified when resource is updated" do
     resource =
       AshSlugTest.Resource
-      |> Ash.Changeset.for_create(:create, %{text1: "Hello, World!"})
+      |> Ash.Changeset.for_create(:create, build_params(%{text1: "Hello, World!"}))
       |> Ash.Changeset.set_context(%{foo: :bar})
       |> Ash.create!()
 
@@ -37,7 +51,7 @@ defmodule AshSlugTest do
   test "ensure Ash.CiString value is slugified" do
     resource =
       AshSlugTest.Resource
-      |> Ash.Changeset.for_create(:create, %{text3: Ash.CiString.new("Hello, World!")})
+      |> Ash.Changeset.for_create(:create, build_params(%{text3: Ash.CiString.new("Hello, World!")}))
       |> Ash.Changeset.set_context(%{foo: :bar})
       |> Ash.create!()
 
@@ -47,7 +61,7 @@ defmodule AshSlugTest do
   test "ensure value is slugified into another attribute" do
     resource =
       AshSlugTest.Resource
-      |> Ash.Changeset.for_create(:create, %{text2: "Hello, World!"})
+      |> Ash.Changeset.for_create(:create, build_params(%{text2: "Hello, World!"}))
       |> Ash.Changeset.set_context(%{foo: :bar})
       |> Ash.create!()
 
@@ -58,9 +72,11 @@ defmodule AshSlugTest do
   test "ensure non-string fields raise error" do
     assert_raise Ash.Error.Invalid, ~r/is not a string value/, fn ->
       AshSlugTest.Resource
-      |> Ash.Changeset.for_create(:create, %{bool: false})
+      |> Ash.Changeset.for_create(:create, build_params(%{bool: false}))
       |> Ash.Changeset.set_context(%{foo: :bar})
       |> Ash.create!()
     end
   end
+
+  defp build_params(params), do: Map.merge(@base_params, params)
 end
