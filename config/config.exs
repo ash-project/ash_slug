@@ -7,6 +7,7 @@ import Config
 config :ash, :disable_async?, true
 config :ash, :validate_domain_resource_inclusion?, false
 config :ash, :validate_domain_config_inclusion?, false
+config :ash, default_string_length_count: :codepoints
 
 if Mix.env() == :dev do
   config :git_ops,
